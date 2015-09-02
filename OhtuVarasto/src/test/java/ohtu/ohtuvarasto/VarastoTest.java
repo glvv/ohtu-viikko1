@@ -75,4 +75,61 @@ public class VarastoTest {
         varasto = new Varasto(-1,-1);
         varasto.toString();
     }
+    
+    @Test
+    public void varastoAntaaKaikkiMitaOnJaljellaJosPyydettyaMaaraaEiOle() {
+        varasto.lisaaVarastoon(5);
+        assertEquals(5, varasto.otaVarastosta(6), vertailuTarkkuus);
+    }
+    
+    @Test
+    public void varastoonEiVoiLisataYliMaksimimaaraa() {
+        varasto.lisaaVarastoon(3);
+        varasto.lisaaVarastoon(65);
+        assertEquals(10, varasto.getSaldo(), vertailuTarkkuus);
+    }
+    
+    @Test
+    public void varastoJollaOnNegatiivinenTilavuusOnSaaTilavuudeksiNollan() {
+        Varasto n = new Varasto(-32);
+        assertEquals(0, n.getTilavuus(), vertailuTarkkuus);
+    }
+    
+    @Test
+    public void varastoJolleAnnetaanNegatiivinenAlkusaldoSaaSaldoksiNollan() {
+        Varasto n = new Varasto(12, -1212);
+        assertEquals(0, n.getSaldo(), vertailuTarkkuus);
+    }
+    
+    @Test
+    public void saldoEiMeneMiinukselleJosKaikkiAnnetaan() {
+        varasto.lisaaVarastoon(5);
+        varasto.otaVarastosta(34);
+        assertEquals(0, varasto.getSaldo(), vertailuTarkkuus);
+    }
+    
+    @Test
+    public void josVarastossaEiOleMitaanPalautetaan0() {
+        assertEquals(0, varasto.otaVarastosta(3434), vertailuTarkkuus);
+    }
+    
+    @Test
+    public void kunVarastoonLisataanLiikaSaldoOnTilavuus() {
+        varasto.lisaaVarastoon(66777);
+        assertEquals(varasto.getTilavuus(), varasto.getSaldo(), vertailuTarkkuus);
+    }
+    
+    @Test
+    public void kunVarastostaOtetaanNegatiivinenMaaraPalautetaan0() {
+        varasto.lisaaVarastoon(3);
+        assertEquals(0, varasto.otaVarastosta(-5), vertailuTarkkuus);
+    }
+    
+    @Test
+    public void kunVarastoonLaitetaanNegatiivinenMaarasSaldoEiMuutu() {
+        varasto.lisaaVarastoon(3);
+        varasto.lisaaVarastoon(-3);
+        assertEquals(3, varasto.getSaldo(), vertailuTarkkuus);
+    }
+    
 }
